@@ -164,7 +164,7 @@ module "kafka" {
   # One EIP per broker
   public_ip_ids = [
     "eip-id-1",
-    "eip-id-2", 
+    "eip-id-2",
     "eip-id-3"
   ]
 
@@ -297,4 +297,3 @@ module "kafka" {
 Report issues/questions/feature requests in the [issues](https://github.com/artifactsystems/terraform-huawei-dms/issues/new) section.
 
 Full contributing [guidelines are covered here](.github/CONTRIBUTING.md).
-

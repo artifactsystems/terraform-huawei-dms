@@ -77,4 +77,3 @@ This example does not require any inputs. All configuration is handled through l
 | kafka_instance_partition_num | The number of partitions |
 | vpc_id | The VPC ID |
 | security_group_id | The security group ID |
-

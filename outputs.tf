@@ -207,3 +207,169 @@ output "kafka_instance_message_query_inst_enable" {
   description = "Whether message query is enabled"
   value       = try(module.kafka_instance[0].message_query_inst_enable, null)
 }
+
+################################################################################
+# RabbitMQ Instance - Basic Information
+################################################################################
+
+output "rabbitmq_instance_id" {
+  description = "The RabbitMQ instance ID"
+  value       = try(module.rabbitmq_instance[0].id, null)
+}
+
+output "rabbitmq_instance_name" {
+  description = "The RabbitMQ instance name"
+  value       = try(module.rabbitmq_instance[0].name, null)
+}
+
+output "rabbitmq_instance_status" {
+  description = "The status of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].status, null)
+}
+
+output "rabbitmq_instance_engine" {
+  description = "The message engine type"
+  value       = try(module.rabbitmq_instance[0].engine, null)
+}
+
+output "rabbitmq_instance_engine_version" {
+  description = "The RabbitMQ engine version"
+  value       = try(module.rabbitmq_instance[0].engine_version, null)
+}
+
+output "rabbitmq_instance_specification" {
+  description = "The RabbitMQ instance specification"
+  value       = try(module.rabbitmq_instance[0].specification, null)
+}
+
+output "rabbitmq_instance_type" {
+  description = "The DMS RabbitMQ instance type"
+  value       = try(module.rabbitmq_instance[0].type, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Network Information
+################################################################################
+
+output "rabbitmq_instance_port" {
+  description = "The port number of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].port, null)
+}
+
+output "rabbitmq_instance_connect_address" {
+  description = "The IP address of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].connect_address, null)
+}
+
+output "rabbitmq_instance_management_connect_address" {
+  description = "The management address of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].management_connect_address, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Public Access
+################################################################################
+
+output "rabbitmq_instance_enable_public_ip" {
+  description = "Whether public access to the RabbitMQ instance is enabled"
+  value       = try(module.rabbitmq_instance[0].enable_public_ip, null)
+}
+
+output "rabbitmq_instance_public_ip_address" {
+  description = "The public IP address of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].public_ip_address, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Storage Information
+################################################################################
+
+output "rabbitmq_instance_storage_space" {
+  description = "The message storage capacity in GB"
+  value       = try(module.rabbitmq_instance[0].storage_space, null)
+}
+
+output "rabbitmq_instance_used_storage_space" {
+  description = "The used message storage space in GB"
+  value       = try(module.rabbitmq_instance[0].used_storage_space, null)
+}
+
+output "rabbitmq_instance_extend_times" {
+  description = "The extend times"
+  value       = try(module.rabbitmq_instance[0].extend_times, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Cluster Information
+################################################################################
+
+output "rabbitmq_instance_resource_spec_code" {
+  description = "The resource specifications identifier"
+  value       = try(module.rabbitmq_instance[0].resource_spec_code, null)
+}
+
+output "rabbitmq_instance_is_logical_volume" {
+  description = "Whether the instance is a new instance"
+  value       = try(module.rabbitmq_instance[0].is_logical_volume, null)
+}
+
+################################################################################
+# RabbitMQ Instance - User & Metadata
+################################################################################
+
+output "rabbitmq_instance_user_id" {
+  description = "The ID of the user who created the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].user_id, null)
+}
+
+output "rabbitmq_instance_user_name" {
+  description = "The name of the user who created the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].user_name, null)
+}
+
+output "rabbitmq_instance_created_at" {
+  description = "The create time of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].created_at, null)
+}
+
+output "rabbitmq_instance_charging_mode" {
+  description = "The charging mode of the RabbitMQ instance"
+  value       = try(module.rabbitmq_instance[0].charging_mode, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Vhosts
+################################################################################
+
+output "rabbitmq_vhost_ids" {
+  description = "A map of vhost name to vhost ID"
+  value       = try(module.rabbitmq_instance[0].vhost_ids, null)
+}
+
+output "rabbitmq_vhost_tracing" {
+  description = "A map of vhost name to tracing enabled status"
+  value       = try(module.rabbitmq_instance[0].vhost_tracing, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Users
+################################################################################
+
+output "rabbitmq_user_ids" {
+  description = "A map of user access_key to user ID"
+  value       = try(module.rabbitmq_instance[0].user_ids, null)
+}
+
+################################################################################
+# RabbitMQ Instance - Plugins
+################################################################################
+
+output "rabbitmq_plugin_ids" {
+  description = "A map of plugin name to plugin ID"
+  value       = try(module.rabbitmq_instance[0].plugin_ids, null)
+}
+
+output "rabbitmq_plugin_details" {
+  description = "A map of plugin name to plugin details (enable, running, version)"
+  value       = try(module.rabbitmq_instance[0].plugin_details, null)
+}

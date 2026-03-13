@@ -1,12 +1,14 @@
-# HuaweiCloud DMS Kafka Terraform Module
+# HuaweiCloud DMS Terraform Module
 
-Terraform module which creates DMS (Distributed Message Service) Kafka instance on HuaweiCloud.
+Terraform module which creates DMS (Distributed Message Service) resources on HuaweiCloud — supports both **Kafka** and **RabbitMQ** instances.
 
 ## Usage
 
+### Kafka
+
 ```hcl
 module "kafka" {
-  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.0.0"
+  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.1.0"
 
   name              = "my-kafka-cluster"
   engine_version    = "2.7"
@@ -27,50 +29,73 @@ module "kafka" {
 }
 ```
 
+### RabbitMQ
+
+```hcl
+module "rabbitmq" {
+  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.1.0"
+
+  create_rabbitmq_instance = true
+  create_kafka_instance    = false
+
+  rabbitmq_name              = "my-rabbitmq-cluster"
+  rabbitmq_engine_version    = "3.8.35"
+  rabbitmq_flavor_id         = "rabbitmq.2u4g.cluster"
+  rabbitmq_storage_spec_code = "dms.physical.storage.high.v2"
+  rabbitmq_storage_space     = 300
+  rabbitmq_broker_num        = 3
+
+  rabbitmq_availability_zones = ["tr-west-1a", "tr-west-1b", "tr-west-1c"]
+  rabbitmq_vpc_id             = "your-vpc-id"
+  rabbitmq_network_id         = "your-subnet-id"
+  rabbitmq_security_group_id  = "your-security-group-id"
+
+  rabbitmq_access_user = "admin"
+  rabbitmq_password    = "YourSecurePassword@123"
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
+```
+
 ## Features
 
-This module supports the following DMS Kafka features:
-
-### Core Features
+### Kafka
 - ✅ **Kafka Instance**: Create and manage Kafka clusters with flexible configurations
 - ✅ **Multiple Engine Versions**: Support for Kafka 1.1.0, 2.3.0, 2.7, and other supported versions
 - ✅ **Flexible Flavors**: Choose from various instance flavors (c6.2u4g, c6.4u8g, c6.8u16g, c6.16u32g)
 - ✅ **Scalable Storage**: 300GB to 900,000GB storage capacity based on flavor
 - ✅ **Multi-Broker Clusters**: Configure multiple brokers for high availability
-
-### Network Configuration
-- ✅ **VPC Integration**: Deploy within your existing VPC and subnet
-- ✅ **Multi-AZ Deployment**: Distribute brokers across Availability Zones (1 or 3+ AZs)
-- ✅ **IPv6 Support**: Enable IPv6 networking for Kafka instances
-- ✅ **Custom Broker IPs**: Specify private IP addresses for new brokers
-
-### Authentication & Security
 - ✅ **SASL/SSL Authentication**: Secure access with username/password authentication
 - ✅ **Security Protocols**: SASL_SSL (encrypted) or SASL_PLAINTEXT (plaintext with auth)
-- ✅ **Authentication Mechanisms**: PLAIN or SCRAM-SHA-512
-- ✅ **VPC Client Plain Access**: Enable plaintext access within VPC
-
-### Access Options
 - ✅ **Public Access**: Internet access via EIP binding
 - ✅ **Cross-VPC Access**: Enable access from other VPCs with advertised IP configuration
 - ✅ **Port Protocol Configuration**: Fine-grained control over private/public access protocols
-
-### Operations & Maintenance
-- ✅ **Maintenance Window**: Configurable maintenance schedules
-- ✅ **Retention Policy**: Automatic message deletion or produce rejection when full
-- ✅ **Auto Topic Creation**: Automatically create topics on first message
-- ✅ **Smart Connect (Dumping)**: Enable message dumping for data integration
 - ✅ **Custom Parameters**: Configure Kafka broker parameters
 
-### Enterprise & Billing
+### RabbitMQ
+- ✅ **RabbitMQ Instance**: Create and manage RabbitMQ clusters
+- ✅ **Virtual Hosts (vhosts)**: Create and manage isolated virtual host environments
+- ✅ **User Management**: Create users with per-vhost permissions (conf/write/read)
+- ✅ **Plugin Management**: Enable RabbitMQ plugins (e.g. `rabbitmq_sharding`)
+- ✅ **SSL Support**: Enable SSL for secure AMQP connections
+- ✅ **ACL Support**: Enable ACL for AMQP-0-9-1 protocol
+- ✅ **Public Access**: Internet access via single EIP binding
+
+### Common
+- ✅ **VPC Integration**: Deploy within your existing VPC and subnet
+- ✅ **Multi-AZ Deployment**: Distribute brokers across Availability Zones (1 or 3+ AZs)
+- ✅ **Maintenance Window**: Configurable maintenance schedules
 - ✅ **Enterprise Project Integration**: Support for HuaweiCloud Enterprise Projects
 - ✅ **Flexible Billing**: Pay-per-use (postPaid) or subscription (prePaid) modes
-- ✅ **Auto Renewal**: Automatic subscription renewal for prePaid instances
 - ✅ **Tag Management**: Comprehensive tagging support
 
 ## Examples
 
 - [basic](./examples/basic) - Basic Kafka cluster with SASL/SSL authentication and custom parameters
+- [rabbitmq](./examples/rabbitmq) - Basic RabbitMQ cluster with VPC and security group
 
 ## Instance Sizing
 
@@ -282,11 +307,23 @@ module "kafka" {
 ## Conditional Creation
 
 ```hcl
+# Create only Kafka (default behaviour)
 module "kafka" {
-  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.0.0"
+  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.1.0"
 
-  create               = true   # Master toggle
-  create_kafka_instance = true  # Toggle Kafka instance creation
+  create                = true
+  create_kafka_instance = true
+
+  # ... other configuration
+}
+
+# Create only RabbitMQ
+module "rabbitmq" {
+  source = "github.com/artifactsystems/terraform-huawei-dms?ref=v1.1.0"
+
+  create                   = true
+  create_kafka_instance    = false
+  create_rabbitmq_instance = true
 
   # ... other configuration
 }
